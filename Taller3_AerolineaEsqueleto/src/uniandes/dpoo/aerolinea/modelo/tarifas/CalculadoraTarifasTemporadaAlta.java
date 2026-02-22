@@ -21,6 +21,6 @@ public class CalculadoraTarifasTemporadaAlta extends CalculadoraTarifas{
 	
 	public double calcularPorcentajeDescuento(Cliente cliente) {
 		
-		return 1; 
+		return 0; 
 	}
 }

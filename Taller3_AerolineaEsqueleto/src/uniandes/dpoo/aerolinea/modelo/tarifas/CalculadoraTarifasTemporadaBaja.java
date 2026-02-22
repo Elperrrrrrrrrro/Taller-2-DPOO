@@ -29,8 +29,26 @@ public class CalculadoraTarifasTemporadaBaja extends CalculadoraTarifas{
 	}
 	
 	public double calcularPorcentajeDescuento(Cliente cliente) {
-		
-		return 1; 
+		double rta = 0;
+		if (cliente instanceof ClienteCorporativo) {
+	        
+
+	        ClienteCorporativo empresa = (ClienteCorporativo) cliente;
+	        
+
+	        int tamano = empresa.getTamanoEmpresa();
+	        switch (tamano) {
+	            case 1:
+	            	rta = DESCUENTO_GRANDES;
+	            case 2:
+	            	rta = DESCUENTO_MEDIANAS;
+	            case 3:
+	            	rta = DESCUENTO_PEQ;
+	        
+	        }
+
+	    }
+		return rta;
 	}
 	
 }
