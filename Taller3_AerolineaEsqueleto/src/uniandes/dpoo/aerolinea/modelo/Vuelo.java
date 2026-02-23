@@ -1,9 +1,10 @@
 package uniandes.dpoo.aerolinea.modelo;
 import uniandes.dpoo.aerolinea.tiquetes.*;
+import uniandes.dpoo.aerolinea.modelo.tarifas.*;
 import java.util.HashMap; 
 import java.util.Map;
 import uniandes.dpoo.aerolinea.modelo.cliente.*;
-
+import uniandes.dpoo.aerolinea.exceptions.*;
 
 public class Vuelo {
 	private String fecha;
@@ -37,9 +38,21 @@ public class Vuelo {
 	
 	public int venderTiquetes​(Cliente cliente,
 			CalculadoraTarifas calculadora,
-			int cantidad) {
+			int cantidad) throws VueloSobrevendidoException {
+		int costo = 0;
+		if ( avion.getCapacidad()> cantidad) {
+			costo = calculadora.calcularTarifa(this, cliente);
+			
+			for ( int i=0 ; i < cantidad ; i++) {
+				Tiquete nuevo = GeneradorTiquetes.generarTiquete(this, cliente, costo);
+				tiquetes.put(nuevo.getCodigo(), nuevo);
+			}
+		}else {
+			throw new VueloSobrevendidoException(this);
+		}
 		
 		
+		return costo*cantidad;
 	}
 	
 }
